@@ -6,13 +6,13 @@ from datetime import datetime
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(150), nullable=False, unique=True)
-    email = db.Column(db.String(150), nullable=False, unique=True)
+    phone = db.Column(db.String(150), nullable=False, unique=True)
     password = db.Column(db.String(256), nullable=False)
-    posts = db.relationship('Post', backref='author', lazy=True)
 
-    def __init__(self, username, email, password):
+
+    def __init__(self, username, phone, password):
         self.username=username
-        self.email = email
+        self.phone = phone
         self.password = generate_password_hash(password)
 
 
