@@ -9,8 +9,7 @@ def index():
     name = "Jerome's Phone Book"
     title = 'Coding Temple Flask'
     return render_template('index.html', name_of_user=name, title=title)
-
-
+    
 
 @app.route('/register', methods=["GET", 'POST'])
 def register():
