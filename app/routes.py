@@ -1,7 +1,8 @@
 from app import app, db
-from flask import render_template
-from app.forms import UserInfoForm
+from flask import render_template, redirect, url_for, flash
+from app.forms import UserInfoForm, LoginForm
 from app.models import User
+from flask_login import login_user, logout_user, current_user, login_required
 
 
 @app.route('/')
@@ -25,6 +26,44 @@ def register():
 
         db.session.add(new_user)
         db.session.commit()
-        
+
+        return redirect(url_for('index'))
     return render_template('register.html', form=register_form)
 
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    form = LoginForm()
+    if form.validate_on_submit():
+        # Grab data from form
+        username = form.username.data
+        password = form.password.data
+
+        # Query our User table for a user with username
+        user = User.query.filter_by(username=username).first()
+
+        # Check if the user is None or if password is incorrect
+        if user is None or not user.check_password(password):
+            flash('Your username or password is incorrect', 'danger')
+            return redirect(url_for('login'))
+        print(user)
+        login_user(user)
+
+        flash(f'Welcome {user.username}. You have succesfully logged in.', 'success')
+
+        return redirect(url_for('my_post'))
+        
+
+    return render_template('login.html', login_form=form)
+
+@app.route('/logout')
+def logout():
+    logout_user()
+    return redirect(url_for('index'))
+
+@app.route('/my_post')
+@login_required
+def my_post():
+    numbers = []
+    numbers.append([current_user.username, current_user.phone])
+    print(numbers)
+    return render_template('my_post.html', numbers=numbers)
