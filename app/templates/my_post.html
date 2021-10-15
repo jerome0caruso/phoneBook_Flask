@@ -8,12 +8,12 @@
 {% for p in numbers %}
     <div class="card bg-info text-dark">
         <div class="card-header">
-            <h1>{{ p[0].title() }}</h1>
+            <h1>{{ p.name}}</h1>
         
         </div>
         <div class="card-body">
         <blockquote class="blockquote mb-0">
-            <p>{{ p[1]}}</p>  
+            <p>{{ p.phone}}</p>  
         </blockquote>
     </div>
 {% endfor %}

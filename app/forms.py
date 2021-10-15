@@ -15,3 +15,8 @@ class LoginForm(FlaskForm):
     username = StringField('Username', validators=[DataRequired()])
     password = PasswordField('Password', validators=[DataRequired()])
     submit = SubmitField()
+
+class NumberForm(FlaskForm):
+    name = StringField('Name', validators=[DataRequired()])
+    phone = StringField('Phone Number', validators=[Regexp(r'\d{3}-\d{3}-\d{4}')])
+    submit = SubmitField()

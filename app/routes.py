@@ -1,7 +1,7 @@
 from app import app, db
 from flask import render_template, redirect, url_for, flash
-from app.forms import UserInfoForm, LoginForm
-from app.models import User
+from app.forms import UserInfoForm, LoginForm, NumberForm
+from app.models import User, Phone
 from flask_login import login_user, logout_user, current_user, login_required
 
 
@@ -63,7 +63,20 @@ def logout():
 @app.route('/my_post')
 @login_required
 def my_post():
-    numbers = []
-    numbers.append([current_user.username, current_user.phone])
-    print(numbers)
+    numbers = Phone.query.all()
     return render_template('my_post.html', numbers=numbers)
+
+@app.route('/phone_number', methods=['GET', 'POST'])
+@login_required
+def createnumber():
+    form = NumberForm()
+    if form.validate_on_submit():
+        print('Hello')
+        name = form.name.data
+        phone = form.phone.data
+        new_post = Phone(name, phone, current_user.id)
+        db.session.add(new_post)
+        db.session.commit()
+        return redirect(url_for('my_post'))
+    return render_template('phone_number.html', form=form)
+

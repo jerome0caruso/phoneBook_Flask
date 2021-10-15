@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h1>Enter a number</h1>
+<div class="container">
+    <form action="" autocomplete="off" method="post">
+        {{ form.hidden_tag() }}
+        <div class="form-group">
+            <fieldset>
+                {{ form.name.label }}
+                {{ form.name(class='form-control', placeholder='title') }}
+            </fieldset>
+            <fieldset>
+                {{ form.phone.label }}
+                {{ form.phone(class='form-control', placeholder='content') }}
+            </fieldset>
+        </div>
+        {{ form.submit(class='btn btn-success') }}
+    </form>
+</div>
+
+{% endblock content %}

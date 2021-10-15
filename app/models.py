@@ -22,3 +22,14 @@ class User(db.Model, UserMixin):
 
     def check_password(self, password):
         return check_password_hash(self.password, password)
+
+class Phone(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name= db.Column(db.String(200))
+    phone = db.Column(db.String(300))
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+
+    def __init__(self, name, phone, user_id):
+        self.name = name
+        self.phone = phone
+        self.user_id = user_id
