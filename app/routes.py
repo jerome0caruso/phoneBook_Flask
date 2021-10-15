@@ -66,6 +66,12 @@ def my_post():
     numbers = Phone.query.all()
     return render_template('my_post.html', numbers=numbers)
 
+@app.route('/each_pbook')
+@login_required
+def each_number():
+    numbers = current_user.phone
+    return render_template('each_pbook.html', numbers=numbers)
+
 @app.route('/phone_number', methods=['GET', 'POST'])
 @login_required
 def createnumber():
